@@ -2,7 +2,7 @@ name: PR_002_01_dev
 
 on:
   pull_request:
-    branches: [main]
+    branches: [esp32_wifi_repeater]
   workflow_dispatch: # 수동 실행 트리거 추가
 
 jobs:
