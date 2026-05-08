@@ -217,10 +217,12 @@ static void initialize_console(void)
     fcntl(fileno(stdin), F_SETFL, O_NONBLOCK);
 
     /* Minicom, screen, idf_monitor send CR when ENTER key is pressed */
-    usb_serial_jtag_vfs_set_rx_line_endings(ESP_LINE_ENDINGS_CR);
+	esp_vfs_dev_usb_serial_jtag_set_rx_line_endings(ESP_LINE_ENDINGS_CR);
+    // usb_serial_jtag_vfs_set_rx_line_endings(ESP_LINE_ENDINGS_CR);
 
     /* Move the caret to the beginning of the next line on '\n' */
-    usb_serial_jtag_vfs_set_tx_line_endings(ESP_LINE_ENDINGS_CRLF);
+    esp_vfs_dev_usb_serial_jtag_set_tx_line_endings(ESP_LINE_ENDINGS_CRLF);
+	// usb_serial_jtag_vfs_set_tx_line_endings(ESP_LINE_ENDINGS_CRLF);
     usb_serial_jtag_driver_config_t usb_serial_jtag_config = {
         .tx_buffer_size = 256,
         .rx_buffer_size = 256,
@@ -230,7 +232,8 @@ static void initialize_console(void)
     usb_serial_jtag_driver_install(&usb_serial_jtag_config);
 
     /* Tell vfs to use usb-serial-jtag driver */
-    usb_serial_jtag_vfs_use_driver();
+	esp_vfs_dev_usb_serial_jtag_use_driver();
+    // usb_serial_jtag_vfs_use_driver();
 #endif
 
     /* Initialize the console */
