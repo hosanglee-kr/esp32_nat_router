@@ -89,10 +89,13 @@ jobs:
 
       # [중요] 기존 꼬인 의존성 파일 강제 제거
       # idf_component.yml 설정이 반영되도록 lock 파일을 삭제합니다.
+      # 기존 꼬인 의존성 파일과 캐시된 폴더 완벽히 강제 제거
       - name: Clean Dependency Lock
         run: |
           rm -f dependencies.lock
+          rm -rf managed_components
           rm -rf .pio
+
 
       - name: Run PlatformIO build for ${{ matrix.environments }}
         env:
