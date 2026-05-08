@@ -87,16 +87,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install --upgrade platformio
 
-      # [중요] 기존 꼬인 의존성 파일 강제 제거
-      # idf_component.yml 설정이 반영되도록 lock 파일을 삭제합니다.
-      # 기존 꼬인 의존성 파일과 캐시된 폴더 완벽히 강제 제거
+      # (기존) 꼬인 의존성 파일 강제 제거
       - name: Clean Dependency Lock
         run: |
           rm -f dependencies.lock
           rm -rf managed_components
           rm -rf .pio
 
-
+      # [여기부터 새로 추가] ESP-IDF 컴포넌트 매니저 강제 업데이트
+      - name: Update IDF Component Manager
+        run: |
+          # 1. PlatformIO가 내부적으로 ESP-IDF 가상환경(.espidf-5.1.2)을 다운로드하고 생성하도록 유도합니다.
+          # (이때 당연히 컴포넌트 에러가 나겠지만, || true 를 붙여서 무시하고 다음으로 넘어갑니다)
+          pio run -e ${{ matrix.environments }} || true
+          
+          # 2. 방금 생성된 가상환경 안의 파이썬(pip)을 사용해 구형 컴포넌트 매니저를 최신으로 덮어씌웁니다.
+          /home/runner/.platformio/penv/.espidf-5.1.2/bin/python -m pip install --upgrade idf-component-manager
+          
       - name: Run PlatformIO build for ${{ matrix.environments }}
         env:
           # 수동 실행 시 github.event.number가 없으므로 기본값 0 설정
