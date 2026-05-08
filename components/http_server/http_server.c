@@ -447,7 +447,10 @@ static char *nvs_export_to_json_robust(bool include_secrets)
     if (!arr) { nvs_close(nvs); return NULL; }
 
     nvs_iterator_t it = NULL;
-    err = nvs_entry_find_in_handle(nvs, NVS_TYPE_ANY, &it);
+
+    // [수정 후] - v5.1.2 호환 문법
+    err = nvs_entry_find("nvs", "esp32_nat", NVS_TYPE_ANY, &it);
+    // err = nvs_entry_find_in_handle(nvs, NVS_TYPE_ANY, &it);
     while (err == ESP_OK) {
         nvs_entry_info_t info;
         nvs_entry_info(it, &info);
@@ -2998,7 +3001,9 @@ httpd_handle_t start_webserver(uint16_t port)
     config.server_port = port;
     config.stack_size = 16384;  // Large stack needed for mappings page with 3x 2KB HTML buffers
     config.max_uri_handlers = 13;
-    config.max_uri_len = 1024;
+    
+    // [수정 후] - 5.1.2에는 없는 설정이므로 주석 처리 또는 삭제
+    // config.max_uri_len = 1024;
     esp_timer_create(&restart_timer_args, &restart_timer);
 
     // Start the httpd server
