@@ -2,7 +2,7 @@ name: Build ESP32-S3 NAT Router
 
 on:
   pull_request:
-    branches: [main]
+    branches: [esp32_wifi_repeater]
   workflow_dispatch: # 수동 실행 버튼 활성화
 
 jobs:
