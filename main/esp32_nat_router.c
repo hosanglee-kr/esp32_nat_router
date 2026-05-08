@@ -232,7 +232,7 @@ static void initialize_console(void)
     usb_serial_jtag_driver_install(&usb_serial_jtag_config);
 
     /* Tell vfs to use usb-serial-jtag driver */
-	esp_vfs_dev_usb_serial_jtag_use_driver();
+	esp_vfs_usb_serial_jtag_use_driver();
     // usb_serial_jtag_vfs_use_driver();
 #endif
 
