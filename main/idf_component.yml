@@ -1,8 +1,7 @@
-# main/idf_component.yml
 dependencies:
-  espressif/led_strip:
-    version: "<3.0.0"  # 3.0.0 미만 버전(주로 2.5.3)을 사용하도록 고정
-  espressif/mdns:
-    version: "^1.1.0"
   idf:
     version: "==5.1.2"
+  espressif/led_strip:
+    version: ">=2.0.0,<3.0.0" # 3.0.0 미만임을 더 명확히 명시
+  espressif/mdns:
+    version: "^1.1.0"
