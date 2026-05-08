@@ -1,3 +1,6 @@
 dependencies:
-  espressif/led_strip: '*'
+  espressif/led_strip:
+    version: "2.5.3" # 3.x 버전은 IDF 5.2 이상을 요구하므로 2.x대로 낮춤
   espressif/mdns: '*'
+
+  
