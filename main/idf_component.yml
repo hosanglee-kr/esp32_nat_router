@@ -1,3 +1,7 @@
 dependencies:
-  espressif/led_strip: '*'
-  espressif/mdns: '*'
+  idf:
+    version: "==5.1.2"
+  espressif/led_strip:
+    version: "==2.4.1" 
+  espressif/mdns:
+    version: "==1.1.0" # '^' 기호를 지우고 1.1.0으로 완벽히 고정!

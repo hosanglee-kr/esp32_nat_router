@@ -1,9 +1,6 @@
-# components/oled_display/CMakeLists.txt
-
 if(IDF_TARGET STREQUAL "esp32c3" OR IDF_TARGET STREQUAL "esp32s3")
     set(OLED_SRCS "oled_display.c")
-    # 수정: esp_driver_i2c와 esp_driver_gpio를 지우고 driver 하나로 통합
-    set(OLED_REQUIRES driver nvs_flash freertos log lwip esp_netif esp_wifi)
+    set(OLED_REQUIRES esp_driver_i2c nvs_flash freertos log lwip esp_netif esp_wifi esp_driver_gpio)
 else()
     set(OLED_SRCS "")
     set(OLED_REQUIRES "")

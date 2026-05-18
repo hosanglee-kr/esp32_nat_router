@@ -1,0 +1,46 @@
+name: Build ESP32-S3 NAT Router
+
+on:
+  pull_request:
+    branches: [esp32_wifi_repeater]
+  workflow_dispatch: # 수동 실행 버튼 활성화
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # ESP-IDF의 git rev-parse 에러 방지
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install PlatformIO
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade platformio
+
+      - name: Clean Dependency Lock & Cache
+        # 이전 빌드에서 남은 꼬인 캐시와 컴포넌트를 완전히 삭제
+        run: |
+          rm -f dependencies.lock
+          rm -rf managed_components
+          rm -rf .pio
+
+      - name: Run PlatformIO build for esp32-s3-n16r8
+        run: pio run -e esp32-s3-n16r8
+
+      # 기존 Bash 스크립트의 save_binary_artifacts 로직을 대체
+      - name: Upload Binary Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp32-s3-n16r8-firmware
+          # .pio/build/esp32-s3-n16r8/ 디렉토리 내의 모든 bin 파일을 수집
+          path: |
+            .pio/build/esp32-s3-n16r8/*.bin
+          retention-days: 7 # GitHub 스토리지에 보관할 기간 (일)

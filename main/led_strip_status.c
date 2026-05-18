@@ -160,7 +160,9 @@ void led_strip_status_init(void)
         .strip_gpio_num = led_strip_gpio,
         .max_leds = 1,
         .led_model = LED_MODEL_WS2812,
-        .color_component_format = LED_STRIP_COLOR_COMPONENT_FMT_GRB,
+        // 수정 후 (v2.x 문법에 맞게 변경 또는 주석 처리)
+        .led_pixel_format = LED_PIXEL_FORMAT_GRB, 
+        // .color_component_format = LED_STRIP_COLOR_COMPONENT_FMT_GRB,
         .flags.invert_out = 0,
     };
 
